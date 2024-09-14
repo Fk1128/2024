@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+
+    <script>
+        function numbering(n) { 
+            for (let i = 1; i <= n; i++) {
+                console.log(i);
+            }
+        }
+        //자바스크립트 코드는 HTML 요소를 대상으로 적용하는 경우가많다 .
+        //자바스크립트에 어떤 HTML 요소를 대상으로 할건지 정해야한다 .
+        //document -> 웹 문서를 가리키는 자바스크립트 객체 // 자바스크립트가 제공하는 객체
+        //document.quertSelector() - > 웹 문서에서 html요소를 선택 
+         //document.quertSelectorAll() - > 웹 문서에 있는 인자로 전달된  html의 모든요소를 선택하여 배열로 반환 
+
+        function red(){
+            //기능을 적용할 대상 
+           let button = document.querySelectorAll("input") ;
+           console.log(button); // [input,input,input]
+            for( let i = 0 ; i < button.length; i++){
+                button[i].style.backgroundColor = "red";
+            }
+           //배경색 이외에도 다양한 css스타일을 JS를 이용해서 제어할 수 있다 .
+           //button.style.backgroundColor = "red" ;
+        }
+    </script>
+
+
+</head> 
+
+<body>
+
+    <input type="button" value="click" onclick="alert('안녕하세요')">
+    <hr>
+    <p onclick="alert('안녕하세요?')"> 눌러보세요 !</p>
+    <hr>
+    <input type="button" value="버튼" onclick = "numbering(5)">
+    <hr>
+    <!-- 버튼을 클릭하면 버튼의 색을 빨간색으로 바꾸기-->
+     <input type="button" value="버튼" onclick="red()">
+ </body>
+
+</html>
