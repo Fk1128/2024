@@ -1,0 +1,99 @@
+1
+데이터베이스의 구조와 제약조건에 관한 전반적인 명세를 기술한 메타데이터의 집합 
+사용자의 관점에따라 개념 , 내부 ,외부 스키마로 구분할 수 있다 .
+개념스키마 :  전체적인 뷰 
+조직체 전체를 관장하는 입장에서 db를 정의한것
+
+내부스키마 : 저장장치에 어떤 방법으로 저장될것인지에대해 기술 
+시스템 프로그래머나 시스템 설계자가보는 관점의 스키마
+ 
+외부스키마 : user, 프로그래머 관점에서의 스키마 
+
+
+2. 
+create table space user_exam datafile 'C:/Exam/user_exam.dbf' size 10m;
+
+3.
+create user exam identified by 1111;
+
+4.
+4. 카디널리티
+
+5.
+2. 요구사항 분석 → 개념적 모델링 → 논리적 모델링 → 물리적 모델링 → 데이터베이스 구현
+
+6.
+ALTER TABLE EX2_10 ADD CONSTRAINT pk_ex2_10 PRIMARY KEY(Col11);
+
+7.
+
+CREATE TABLE PRODUCT (
+"NO" NUMBER PRIMARY KEY ,
+NAME VARCHAR2(100) UNIQUE ,
+PRICE NUMBER,
+P_DATE DATE
+);
+
+8.
+
+INSERT INTO PRODUCT VALUES(1000,'컴퓨터',100,'21/04/15');
+INSERT INTO PRODUCT VALUES(1002,'냉장고',200,'21/04/15');
+INSERT INTO PRODUCT VALUES(1003,'에어컨',300,'21/04/15');
+INSERT INTO PRODUCT VALUES(1004,'오디오',20,'21/04/15');
+INSERT INTO PRODUCT VALUES(1001,'세탁기',60,SYSDATE);
+
+9.
+UPDATE PRODUCT SET
+PRICE = PRICE+20
+WHERE "NO" = 1000;
+
+10.
+DELETE FROM PRODUCT
+WHERE NAME = '세탁기';
+
+11.
+SELECT NAME,PRICE 
+FROM PRODUCT; 
+
+12. 
+SELECT * FROM PRODUCT ORDER BY PRICE DESC;
+
+13.
+2. 중복 데이터의 활성화
+
+14.
+2. 정규화의 목적은 각 릴레이션에 분산된 종속성을 하나의 릴레이션에 통합하는 것이다.
+
+15.
+1. 이행적 함수 종속을 제거해야 한다.
+
+16.
+삽입이상
+
+삭제이상
+
+갱신이상 
+
+17.
+SELECT REPLACE(FIRST_NAME ,'el','**')
+FROM EMPLOYEES
+WHERE DEPARTMENT_ID= 50;
+
+18.
+SELECT EMPLOYEE_ID,FIRST_NAME,SALARY 
+FROM EMPLOYEES 
+WHERE FIRST_NAME LIKE '______%';
+
+19.
+SELECT EMPLOYEE_ID ,MOD(EMPLOYEE_ID,2) 
+FROM EMPLOYEES e ;
+
+20. 
+SELECT EMPLOYEE_ID ,FIRST_NAME 
+FROM EMPLOYEES 
+WHERE mod(EMPLOYEE_ID,2) = 0;
+
+
+
+
+ 
