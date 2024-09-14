@@ -1,0 +1,146 @@
+이벤트
+클릭, 버튼누름 마우스 올림과 같은 일련의 사건
+
+이벤트처리 
+위 이벤트가 발생했을 때 뭘 하고싶은데 ?
+
+이벤트가 발생하는곳 , 이벤트 처리를 하는곳은 다를 수 있다 .
+
+표준 이벤트모델		인라인 이벤트모델
+keydown			onkeydown	키가 눌렸을때
+click			onclick		클릭 했을때
+doubleclick		ondoubleclick	더블클릭했을 때
+mouseover		onmouseover	마우스를 올렸을 때
+mouseleave		onmouseleave	마우스가 벗어났을때
+change			onchange	요소의 값이 변경( 포커스가 사라졌을때)
+input			oninput		사용자가 요소에 값을 입력할 때
+submit			onsubmit		form 요소의 제출버튼이 클릭되었을 때
+reset			onreset		form 요소의 리셋버튼이 클릭 되었을때
+
+인라인 이벤트모델
+<p onclick="이벤트처리">
+표준 이벤트모델
+<p></p>
+<script>
+헤드에서 스크립트파일을 요청했을때 JS구조상 위에서 아래로 실행하지만		// document: 웹문서를 지칭하는자바스크립트 객체
+아직 BODY에 코드가 로딩이 되지 않았을때 DOMConetentLoaded 이벤트 코드를 써준다 .
+DOM : DocumentObjectModel 의 약자 
+DOMConetentLoaded:  HTML코드가 다 로딩된 후 script에 있는 이벤트를 발생시켜주는 이벤트.
+
+document.addEvent.Listener(DOMContentLoaded,기능 	//	이벤트 처리대상을 정한다
+let p = document.querySelector("p")
+p.addEventListener("이벤트종류,기능)
+) //DOMCL END
+</script>
+
+
+선택자
+태그 선택자
+태그명
+아이디 선택자
+#아이디명
+클래스 선택자
+.클래스명
+
+지킬생태계
+생태계라고 부를만큼 다양한 사용자들이 존재한다.
+덕분에 우리는 누군가 만들어 놓은 템플릿을 열람할 수 있다 .
+
+Agency템플릿 수집하기
+http://jekyllthemes.org/themes/agency
+
+마음에 드는 템플릿을 찾앗으면 라이센스 확인하기
+
+MIT라이선스
+
+이소프트웨어를 누구든지 무상으로 제한없이 사용해도 좋다.
+단 완성된 소포트웨어의 중요한 부분에 저작권을 표시해야한다.
+소포트웨어의 원저작자는 아무런 책임을 지지않는다 .
+
+레포지토리 포크
+오래된 템플릿은 소개사이트에는 있어도 , 원본코드가 유실되어 사용이
+곤란한경우가 잇다 . 따라서 템플릿의 깃허브 레포지토리가 살아있는지 확인해야한다 .
+
+템플릿에 대한 이해
+내가 사용하려고 하는 템플릿의 구조를 이해해야한다 . 
+
+포트폴리오 탭에서 포트폴리오 사진을 하나 누르게 되면
+모달이라고 부르는 창이 뜬다 .
+자바스크립트를 이용해 직접 만들면 굉장히 골치아프고 복잡한데 이런 유용한 기능이 기본적으로 제공되고 있다.
+
+
+jekyll serve 명렁어 실행시 에러나면 다음의 명령어를 순차적으로 실행
+
+gem install wdm
+
+bundle add webrick
+
+지킬 프로젝트 구조
+
+jekyll serve을 함으로써 http://127.0.0.1:4000/  // 이주소로 하여 지킬이 서버를 임시로 열었다 .
+
+서버에 올라간 웹페이지는 실행중인 폴더 안에 있는 코드이다 .
+코드가 수정되면 웹브라우저에서 보이는 페이지 내용도 자동으로 수정된다 .
+
+지킬 프로젝트 기본 구조
+
+_config.yml 	웹페이지의 환경설정과 정보를 보관
+_data/		웹페이지에서 활용할 데이터를 저장
+_includes/ 	웹페이지에 포함시킬 html 파일 / 주로 개별페이지들이나 단락 저장
+_layouts/		웹페이지의 뼈대를 결정
+_posts/		블로그의 게시물을 저장
+_sass/		CSS의 변종은 sass(scss) 파일들을 저장
+_site/		-index.html 역할을 수행할 파일 저장
+		-혹은 규격에 맞춘 마크다운파일도 사용가능		
+
+지킬템플릿 수정하기
+_cofig.yml
+거의 모든 지킬템플릿은 _config.yml 이라는 파일을 포함하고있다.
+웹페이지의 메타데이터를 수정할 수 있도록 제작되어있다 .
+
+config 설정파일
+
+url : "https://fk1128.github.io"
+baseurl: "#the subpath of your site.e.g/blog
+
+title	: Dog Company
+email	: ohyhsf@naver.com
+description: "강아지를 사랑하는모임" 
+author	:Dog Lover
+
+레이아웃 수정하기
+_layouts/폴더 안의 home.html 수정하기
+
+메인타이틀 수정하기
+메인타이틀에 기재된 welecome to our studio와
+it's nice to meet you 라는 문구 수정하기
+
+ctrl +shift +f 를 눌러 vscode 탐색기를 연다
+내가바꾸고싶은 문구를 입력을 해서 위치를 찾는다 .
+
+세부 섹션 수정하기
+1. service 섹션 수정하기
+지킬에서는yml이라는 특이한 확장자를 가진 파일만 수정하면 콘텐츠가
+웹페이지에 자동으로 반영이 된다 .
+지킬의 장점을 이야기할 때 항상'블로그지향'이라는 평가가 언급되는 이유이다.
+
+2. PORTFOLIO섹션 수정하기
+2-1 네비게이션바에 '고양이 사진' 텍스트로 수정하기
+2-2 포트폴리오섹션의 제목과 부제목 '고양이 사진' , '고양이의 귀여움'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
