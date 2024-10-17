@@ -1,0 +1,46 @@
+UserEntity  의 속성
+
+idx(primary Key)
+id(unique)
+pwd
+name (진짜이름)
+email 
+
+UserDTO 의 속성 
+
+token
+idx
+id
+pwd
+name
+email
+
+UserRepository
+회원가입시 중복체크를 위해 
+아이디를 기준으로 유저를 검색하는 메서드 생성
+JpaRepository 상속,UserEntity Id
+
+
+ResponseDTO 의 속성
+
+
+UserService
+UserRepository 를 주입받는다 .
+
+1. id중복체크 메서드 만들기
+메서드명 : boolean isIdDuplicated(String id)
+
+2. 회원 추가 
+id , pwd , name ,email
+
+
+
+localhost:9090/users/signup
+
+
+    {
+        "userId" :"one",
+        "pwd" : "1234",
+        "name" : "k",
+        "email" : "korea@naver.com"
+    }

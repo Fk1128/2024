@@ -1,0 +1,11 @@
+Product 
+
+Entity 클래스 생성
+
+@Builder - 객체 생성을 위한 디자인패턴 , 롬복이 제공하는 어노테이션 , Builder패턴을 사용하기위한 어노테이션 
+@NoArgsConstructor - 매개변수가 없는 생성자를 구현 
+@AllArgsConstructor - 클래스의 모든멤버를 매개변수로 받는 생성자를 구현 
+@Data - 멤버변수의 Setter와 Getter 메서드 구현 
+@Entity -클래스가 데이터베이스의 테이블에 매핑된다는 것을 나타낸다 .
+@Table(name = "Product") -@Table 어노테이션은 JPA에서 엔티티 클래스와 
+			데이터베이스 테이블 간의 매핑을 정의하는 데 사용됩니다

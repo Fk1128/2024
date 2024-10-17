@@ -1,0 +1,38 @@
+토큰을 생성하고 검증해주는 TokenProvider 
+
+사용자가 로그인할 때 토큰을 발급을 해줬다 .
+
+인증이 필요한 모든 요청에 대해 토큰을 인증을 해야한다 .
+
+매번 토큰을 직접 인증하기가 귀찮으니까 filter를 만들었다 .
+
+스프링 시큐리티가 filter에 대한 검증해주고 보내주거나 400에러를 보내거나 해준다 .
+
+web.xml 
+
+@AuthenticationPrincipal
+JwtAuthenticationFilter 에서 정의한 userId 
+filter에 정의한 userId를 주입받을수 있게해주는 어노테이션
+
+
+
+로그아웃 글리치 해결
+- 로그아웃 
+- 로컬 스토리지에서 토큰을 제거하고 
+- 로그인페이지로 리다이렉트
+
+UI 글리치
+- TODO 리스트에 접속한 후 로그인 페이지로 라우팅하기까진 시간이 걸리기 때문이다 .
+- 이 시간은 백엔드 서버에 TODO를 요청하고 결과를 받아서 확인하는데 걸리는 시간이다 .
+
+
+회원생성
+- 리액트로  localhost:9090/auth/signup 에 요청 
+username과
+password를  - Controller -> Service -> repository -> DB  
+
+
+
+CRUD 정리
+
+	

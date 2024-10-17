@@ -1,0 +1,150 @@
+의존성 주입을 할 수 있는 세가지 방법
+
+1.필드주입
+@Autowired를 붙힌다.
+순환참조시 오류가 발생하지 않기때문에 stackOverflow가 일어날 수 있다.
+
+순환참조
+Bean간의 참조 관계가 순환되어 발생하는 상황
+A클래스가 B클래스의 빈을 주입받고, B클래스가 A클래스의 빈을 주입받는 상황
+
+2.생성자 주입
+생성자를 통해 객체를 주입받는다.
+
+3.setter주입
+-setter메서드를 통해 객체를 주입받는다.
+
+class Person{
+   String name;
+   int age;
+
+
+   public  Person(String name, int age){
+	this.name = name;
+	this.age = age;
+
+   }
+
+
+}
+
+
+스프링이 객체를 어떻게 저장하는가 ?
+java에서는 new와 생성자를통해 객체를 메모리에 올렸었다 .
+
+@SpringBootApplication 어노테이션에 속해있는 @ComponentScan 어노테이션이
+해당파일아래 경로에있는 모든 패키지를 탐색하면서 @Component 어노테이션이 붙어있는 클래스를 모두 Map 형태로 저장한다.
+
+패키지를 만들 때 com.example.demo.di1, com.example.demo.di2 이렇게 만든이유이다 .
+
+클래스 이름의 첫글자를 소문자화해서 key로 저장 Computer -> computer
+객체를 value로 만들어서 저장 .
+
+
+객체를 필요로 할 때 스프링이 자동으로 주입을 해준다 이것이 의존성 주입이다 (Dependency Injection) .
+
+1. 필드주입 
+
+@Autowired
+멤버
+
+2. 생성자주입 (대부분에경우 생성자 주입을 사용 Spring에서 가장 권장하는 주입)
+멤버
+
+public 생성자(멤버){
+this.멤버= 멤버
+}
+
+3 setter주입
+
+
+
+@Getter getter 
+메서드 만들어줌 
+@Setter setter 
+메서드만들어줌 
+@NoArgsConstructor 
+매개변수 없는 기본생성자
+@AllArgsConstructor 
+모든 멤버를 매개변수로 가지는 생성자 생성
+@RequiredArgsConstructor
+final 이나 @NonNull인 필드만 매개변수로 갖는 생성자 생성
+@Data
+getter,setter,requiredArgsConstructor,ToString,EqualsAndHashCode 를 한번에 정의
+@Builder빌더
+패턴을 사용할 수 있게 해주는 어노테이션
+
+@Builder
+public class User{
+	private String id;
+	private String name ;
+	private String email ;
+}
+
+User user = User.builder().id("1").name("홍길동).email("hong@example.com").build();
+
+
+Gradle 
+
+Gradle 은 자바 ,코틀린 , 그루비 등 다양한 프로그래밍 언어를 지원하는 빌드 자동화 도구이다 .
+Gradle 은 의존성관리 테스트실행 배포 패키징 등의 빌드작업을 자동화하며 , 유연성과 확장성을 중시한다 .
+특히 멀티프로젝트 빌드와 병렬빌드에 강력한 성능을 발휘하며 , 자바 기반 프로젝트에서는 Maven이나 Ant의 대안으로 많이
+사용된다 .
+
+Gradle의 주요특징
+1. 의존성관리  :
+Gradle은 Maven Central, JCenter ,Ivy 와 같은 의존성 저장소에서 외부 라이브러리를 쉽게 가져와 사용할 수 있도록 도와준다 .
+이를통해 개발자는 필요한 라이브러리를 직접 다운로드하지 않고 , 빌드시 자동으로 라이브러리를 다운로드하고 관리할 수 있다 .
+1-1 의존성 저장소 : 의존성 저장소는 소프트웨어 프로젝트에서 필요한 외부 라이브러리 , 모듈 , 플러그인 등을 저장하고
+제공하는 장소이다 .이러한 저장소는 개발자가 프로젝트에 필요한 의존성을 쉽게 검색하고 다운로드할 수 있도록  해줍니다 .
+
+
+
+
+싱글톤 패턴
+
+객체를 한번만 만들어놓고 계속 갖다 쓰겠다 .
+스프링에서 Bean으로 만드는 것들은 다 싱글톤으로 만들어진다 .
+메모리에 딱 한번만 올라가게 되고 우리는 만들어지는것을 사용한다 .
+
+스프링이 Bean을 만들어서 저장
+사용자는 만들어진 Bean을 사용한다 .
+객체를 계속 만드는게 아닌 한번 만들어진 객체를 계속 사용하는것 .
+
+서비스 개발 실습
+POST로 요청했을 때 CREATE REST API 개발
+GET으로 요청했을 때 RETRIEVE(검색) REST API 개발
+UPDATE로 요청했을 때 UPDATE REST API 개발 
+DELETE 로 요청했을 때 DELETE REST API 개발 
+
+영속계층 - > 서비스계층 -> 표현계층 순으로 구현 
+
+
+
+
+w =1 
+s =-1
+d = +10
+a = -10 
+
+
+
+12.3 > 12.000
+12 > 12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@Autowired
+

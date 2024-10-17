@@ -1,0 +1,14 @@
+프로젝ㅇ트
+
+기획 - 주제선정
+플로우차트 설계 - 
+ui구성 - 피그마로 설계
+기능별 흐름설계 - 
+db설계 (erd설계 erdcloud) ->  (Entity 클래스 설계) 
+
+
+
+
+
+
+awseb-e-x7kj5mrwej-stack-awsebrdsdatabase-flkma30d5kkd.cxqc006kavce.ap-northeast-2.rds.amazonaws.com

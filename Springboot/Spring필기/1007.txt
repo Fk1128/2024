@@ -1,0 +1,177 @@
+프론트엔드 + 백엔드
+
+
+전체조회(조건없음) 특정유저가 작성한 Todo를 조회 (임시계정을 사용하기떄문에 지금은 의미없음 ) 
+
+	요청(requset) 	React		응답 (spring boot)
+클라이언트 	->	프론트엔드  ->   <- 백엔드
+  				(비동기처리) 요청 
+			ex) fetch()/todo 	TodoController  ->	TodoService -> repository -> db
+			axios()					
+					
+
+
+
+추가(내가 입력한 데이터를 백엔드까지 보내야함 ) 
+
+Call (주소,메서드,request(data))
+Options ={ 
+	주소  : 주소 ,
+	method : 메서드(post)
+	}		Json으로 변환 Options.data = 데이터
+axios(Options)
+			TodoCotroller @PostMapping
+Options속 내용들이 백엔드로 넘어감. 
+
+스프링부트
+Controller 에서 사용되는 어노테이션
+
+@Conponent : 스프링부트가 컴포넌트 스캐닝을 할 때 해당 어노테이션이 달린 클래스들을 전부 bean으로 만든다 ,.
+
+@Component 어노테이션의 자식어노테이션
+ㄴ @ Controller 컨트롤러임을 나타내는 어노테이션
+ㄴ @ Service : 서비스임을 나타내는 어노테이션
+ㄴ @ Repository: 리파지토리임을 나타내는 어노테이션
+
+@RestController -> @Controller  +@ ResponseBody
+ㄴ 해당 컨트롤러의 모든 메서드에 @ResponseBody가 적용된다 .
+
+원래 컨트롤러는 반환으로 화면이름을 보낸다 .
+우리는 화면을이미 리액트로 보여주고있다 .
+@ResponseBody를 통해 응답바디에 데이터를 보낸다 .
+
+@GetMapping 
+@PostMapping 
+@PutMapping 
+@DeleteMapping
+
+각각의 요청메서드로 요청이 올때 메서드를 실행해준다 .
+
+@PathVariable resource에 들어있는값을 직접사용 
+요청을 할 때 주소에 들어있는 값을 매개변수로 받을 때 사용.
+localhost:9090/product/1
+@GetMapping("/{id}")
+public String f(@PathVariable int id)
+
+
+@RequestParam
+요청을 할 때 주소에 들어있는 값을 매개변수로 받을때 사용 .
+localhost:9090/product?id=1  ?id=1 (쿼리파라미터) 
+public String f(@requestParam("id") int id) 
+
+
+lombok
+@Getter, @Setter
+클래스에 들어있는 필드에 대해 getter,setter 메서드를 만들어주는 어노테이션
+@NoArgsConstructor
+기본생성자를 생성해주는 어노테이션
+@AllArgsConstructor 
+모든 필드를 매개변수로 갖는 생성자를 만드는 어노테이션 
+@RequiredArgsConstructor 
+final 또는 @Nonnull 어노테이션이 붙은 필드만 매개변수로 갖는 생성자를 생성
+@Data
+ㄴ @Getter
+ㄴ @Setter
+ㄴ @ToString -> 오버라이딩한 toString()메서드를 작성 
+ㄴ @EqualsAndHashCode,
+ㄴ @RequiredArgsConstructor
+ㄴ @Builder -> bulider 패턴으로 객체를 생성할 수 있게 해주는 어노테이션
+
+Car car= new Car() ;
+System.out.println(car.toString()) -> 객체의 주소 
+
+
+JPA 에서 사용하는 어노테이션
+@Entity -> 해당클래스가 JPA의 엔티티임을 명시
+@Id -> 해당 필드가 테이블의 기본키 (Primary Key) 임을 명시
+@GeneratedValue -> 기본값을 자동으로 생성하도록 설정
+@Table -> 엔티티와 매핑될 테이블 이름을 지정. 테이블 이름이 엔티티와 다를 때 사용 
+
+JWT (JasonWebToken) 
+
+id 와 비밀번호를 가지고 로그인 할 떄 -> 토큰생성 및 발급
+
+인증이 필요한 API를 호출할때 토큰을 같이 보내서 인증을받는다 .
+인증이 필요한 API가 1000개면 ?? -> 인증을 1000번받아야한다 .
+
+스프링부트 시큐리티를 사용해서 인증이 필요할 때마다 알아서 처리가 되게하자 .
+
+
+스프링부트 시큐리티를 이용한 토큰 인증과정 
+
+토큰을 발급하는 시점을 잘 알아야한다 .
+사용자정보 검증, 인증성공시 발급 
+1. 사용자 로그인
+클라이언트가 사용자이름과 비밀번호를 포함한 인증요청을 서버로보낸다 , ( /login 엔드포인트)
+서버는 사용자정보를 검증 , 인증성공시 JWT(JSON Web Token) 토큰을 발급한다 . 
+이 JWT토큰은 인증된 사용자임을 나타내며 , Access Token으로 클라이언트에게 반환 .
+
+2. 클라이언트가 요청에 토큰포함 .
+이후 클라이언트는 보호된 자원에 접근하기위해 HTTP요청에 Authorization 헤더에 발급받은 JWT토큰을 포함
+
+3. JWT 인증필터에서 요청 가로채기
+스프링 시큐리티는 요청이 들어올 때 필터체인을 통해 요청을 처리
+
+4. JWT토큰 검증 
+필터에서 추출한 토큰을 TokenProvider 같은 클래스를 사용해 검증 .
+이과정에서 발급된  토큰의 다음사항을 확인한다 .
+ 서명이 올바른지 ,  만료되지않았는지 , 사용자 정보가 유효한지 
+
+5. 사용자 인증정보 설정
+토큰이 유효할시 , 토큰에서 사용자ID나 이름을 추출 , 시큐리티의 SecurityContext 에 인증정보를 설정
+
+6. 보안컨텍스트를 통해 권한 확인 .
+스프링 시큐리티는 SecurityContextHolder에 저장된 인증정보를 사용해 사용자가 요청한 자원에 접근할수있는 권한이 있는지 확인한다 .
+필요한 권한이없으면  403Forbidden응답을 반환한다 .
+
+7. 요청 처리후 응답반환
+모든 검증이 완료되면 스프링시큐리티는 요청을 컨트롤러로 전달하여 비즈니스 로직을 처리한다 .
+컨트롤러가 요청을 처리하고 , 결과를 클라이언트에 반환한다 .
+
+
+
+
+전체 흐름요약
+1. 클라이언트 로그인 : 사용자 정보로 로그인후 서버가 JWT토큰을 발급한다 .
+2. JWT 토큰 포함 요청 :  클라이언트가 JWT토큰을 포함한 요청을보낸다 .
+3. JWT필터에서 요청가로채기 : 스프링 시큐리티의 필터가 요청을 가로채서 JWT토큰을 검증한다 .
+4. JWT 검증 : 서버에서 토큰의 유효성을 확인하고 , 서명과 만료여부등을 검증한다 .
+5. 사용자 인증정보설정 : 토큰이 유효하면 사용자 정보를 추출하고 , 스프링 시큐리티의 SecurityContext 에 인증정보를 설정한다 .
+6. 권한확인 : 설정된 인증정보를 통해 사용자의 권한을 확인한다 .
+7. 요청처리 후 응답 : 권한이 확인되면 요청을 처리하고, 결과를 클라이언트에 반환한다 .
+
+
+
+
+user2 :
+ ""eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0M
+DI4ODM4YTkyNjU5MmI0MDE5MjY1ZTUwNzExMDAwNSIsImlzc
+yI6ImRlbW8gYXBwIiwiaWF0IjoxNzI4Mjg2MzY5LCJleHAiOjE3MjgzNzI3Njl9.kH1CSI
+BWcUvHBYJMahC5RNi
+fAlaYXJRnDzmTF-XA80Cu7fz-LZ_2kk5yi79WFFWJDcwmtuBX16qo-i5qUOJimA
+
+user1 :
+
+"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MDI4ODM4YTkyNjYxMWU2MDE5MjY2MTIzYzhiMDAwMCIsImlzcyI6ImRlbW8gYXBwIiwiaWF0IjoxNzI4Mjg5MzM0LCJleHAiOjE3MjgzNzU3MzR9.tHH613XwFyF1QH3eJ9SQVYieyVkvlngo3ZX0X9tbWYdoA7viyHAxpE0d4KgkvXuu-KIdHzmee4ExTP_2yOWYaQ
+
+
+
+user1이 회원가입 - > user1이 로그인하면서 토큰을 발급받는다 .
+user1이 Todo를 추가하면서 ({"title": "제목1" }) 하면서 토큰을 같이 전송을 한다 .
+-> 토큰을 검증을 받고 유효하면 추가를 해준다 .
+
+
+user2가 회원가입 - > user1이 로그인하면서 토큰을 발급받는다 .
+user2가 Todo를 추가하면서 ({"title": "제목2" }) 하면서 토큰을 같이 전송을 한다 .
+-> 토큰을 검증을 받고 유효하면 추가를 해준다 .
+
+user2는 user1이 추가한 title을 볼 수 없다 .
+
+
+
+
+
+
+
+
+ 
