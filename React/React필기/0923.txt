@@ -1,0 +1,252 @@
+Context API react에서 제공한다 .
+package를 설치할 필요가 없다는 장점이있다 .
+react에서 컴포넌트간의 전역상태를 관리하고 데이터를 공유하기 위한 내장기능이다 .
+컴포넌트 트리의 최상위에서 제공(provide) 하고 하위컴포넌트에서 해당 데이터를소비 (consumer) 할 수 있다 .
+컴포넌트 트리의 여러단계에 걸쳐 데이터를 전달할때 , Props Drilling 문제를 해결하는데 유용하다 .
+
+Props Drilling 이란 상위 컴포넌트에서 하위컴포넌트로 데이터를 전달할때 여러 컴포넌트를 거쳐야하는 문제를말하는데
+이는 코드의 가독성을 떨어뜨리고 유지보수를 어렵게만들 수 있다 .
+
+그렇기에 Context ApI 를 사용하는데 
+전역상태를 관리하는데 유용하다
+애플리케이션에서 전역으로 사용되는 상태를 관리할 수 있다 ( 전역변수와 유사)
+예시로 테마설정 , 언어설정, 사용자인증정보 등을 전역상태로 관리할 수 있다 .
+
+Props Drilling 문제해결
+상위 컴포넌트에서 하위 컴포넌트로 데이터를 전달해야할때 여러중간컴포넌트를 거치지않아도 되는 장점을 가지고있다 .
+
+Context 는 실제로 아무것도 관리하지 않는다.
+단순 값을 전달하는 파이프와 같다. 사용하는 주요 목적은 prop-drilling 을 피하는 것이다
+
+Context생성 
+improt (createContext) from 'react' ;
+const Mycontext = createContext();
+
+// Provider 설정
+Context의 Provider를 사용하여 하위 컴포넌트에 데이터 제공
+
+import React, { useState } from 'react';
+
+const MyProvider = ({ children }) => { //  MyProvider라는 함수형 컴포넌트 정의
+				 children prop을 받아서 Provider안에 포함될 다른 컴포넌트를 렌더링 할 수있게한다.
+    const [value, setValue] = useState('Hello, Context!'); //  value 라는 상태변수에 'Hello, Context!' 초기값 설정 , setValue라는 상태를 업데이트하는 함수생성  
+
+    return ( // JSX 반환 컴포넌트의 렌더링 결과 정의
+        <MyContext.Provider value={{ value, setValue }}>  // MyContext.Provide를 사용 value와 setValue를 context값으로 제공
+						하위 컴포넌트에서 value값과,setValue함수에  접근가능 
+            {children} Myprovider 의 자식 컴포넌트들을 렌더링 , 이부분이 context에 의해 wrapping되어 하위 컴포넌트에서도 context 사용가능 
+        </MyContext.Provider> // Mycontext.Provdier의 닫는태그 모든 하위 컴포넌트가 이 Provider의 범위 내에서 context에 접근가능
+    );
+};
+
+
+
+Consumer 사용하기
+	context의 Consumer 또는 useContext훅을 사용하여 하위 컴포넌트에서 데이터 소비
+
+import { useContext } from 'react';
+
+const MyComponent = () => { //MuComponent 라는 함수형 컴포넌트 정의
+    	const { value, setValue } = useContext(MyContext);  // useContext를 사용하여 Mucontext에서 value와 setValue를 추출한다
+							이 줄에서 Mucontext가 정의 되어있어야 하며 , 이값들은 Provider에서 제공된것이다 .	
+    return (
+        <div>
+            <p>{value}</p> //value를 포함하는 p태그 요소들을 렌더링한다  value의 현재상태가 여기에서 표기된다 .
+			 현재의 value상태는 MyProvider 컴포넌트에서 state로 전역으로 생성되어있는 'Hello,Context!' 상태이다 .
+            <button onClick={() => setValue('Updated Context!')}>Update</button>
+        </div>
+    );
+};
+
+Redux
+상태 관리 라이브러리 . 애플리케이션의 전역상태를 관리하는데 도움을 준다 Context와 유사 
+복잡한 리액트 애플리케이션에서는 여러 컴포넌트간의 상태공유가 어렵기 때문에 Redux를 사용하여 중앙 집중화된 스토어를 통해 
+상태를 효율적으로 관리할 수 있다.
+Redux는 주로 리액트와 함께 사용되지만 , 다른 라이브러리나 프레임워크와도 사용될 수있다 .
+
+Stroe(스토어)와 Action(액션)
+
+Store 애플리케이션의 전역상태를 저장하는곳 	(useState HOOK 처럼 사용)
+createStore 함수를 사용하여 스토어 생성 이스토어는 애플리케이션 전반에서 상태를 유지하고 관리하는역할 
+
+Action 상태를 변경하기 위해 발생시키는 이벤트
+액션은 객체형태로 {type:'ACTION_TYPE', payload: 데이터} 의 구조를 가진다
+	- type 필드는 액션의 종류를 나타낸다,.
+	- payload 는 해당 액션과 함께 전달할 추가 데이터를 나타낸다 .
+
+Reducer (리듀서)
+상태를 변경하는 순수함수이다 (useState의 set 함수와 유사 )
+
+순수함수 
+주어진 입력만을 사용하고 결과를 도출, 함수외부의 상태나 변수에 의존하지 않으며 , 부작용(side effect) 을 일으키지 않는 함수이다
+동일한 입력값에 대해 항상 동일한 결과를 반환한다는 특징이 있어 , 이를 통해 예측가능한 동작과 함수의 테스트 용이성을 제공한다 .
+
+순수함수의 주요특징 
+동일한 입력에 대한 동일한출력
+- 입력값이 같으면 항상 동일한 결과를 반환한다.
+function add(a,b) {
+ return a+b;
+}
+
+add(2,3) ; // 항상 5를반환
+
+외부상태에 의존하지 않음
+- 함수는 함수 내부의 로컬변수와 입력값만 사용하며 , 외부의 변수나 상태를 변경하거나 의존하지않는다 .
+
+
+let externalValue = 10;
+
+function multiply(a) {
+return a*2 ;
+}
+
+multiply (5); // 외부값은 externalValue와는 무관하게 작동
+
+부작용이 없음
+함수가 외부의 상태나 변수에 영향을 주지않으며 , 입력값만 처리하고 반환한다 .
+
+let count = 0;
+
+function increaseCount(){
+	count++; // 전역상태를 변경하는 부작용이 발생함 -> 순수함수가 아님 
+}
+
+현재 상태와 액션을 인자로 받아 새로운상태를 반환한다 .
+이과정에서 상태를 직접 수정하지않고 항상 새로운 상태객체를 반환하는것이 중요하다 .
+
+dispatch 디스패치 
+액션을 스토어에 전달하는 메서드이다.
+컴포넌트에서 디스패치를 통해 액션을 발생시키고 , 리듀서가 상태를 업데이트하도록한다 
+
+Redux의 필요성
+Redux를 사용하면 상태를 중앙에서 관리하여 컴포넌트간의 의존성을 줄이고 , 상태관리가 보다 예측가능하고 유지보수하기 쉬워진다
+
+
+Redux동작 원리 Context API와 유사 
+1. 스토어 생성 : 애플리케이션의 상태를 보관할 스토어를 생성한다 .
+2. 액션 디스패치 : 사용자 인터렉션이나 기타 이벤트에 따라 액션을 디스패치한다 . 
+3. 리듀서 호출 : 디스패치된 액션을 리듀서가 받아 새로운상태를 계산한다 . 
+4. 상태 업데이트 : 스토어의 상태가 업데이트 되고 , 이를 구독하고 있는 컴포넌트들이 리렌더링 된다 .
+
+
+
+
+Redux를 선택할 때
+애플리케이션의 상태 관리가 복잡하거나 규모가 큰 경우
+상태 변경 로직을 명확하게 분리하고 싶을 때
+강력한 디버깅 도구와 미들웨어를 활용하고 싶을 때
+
+Context API를 선택할 때
+상태 관리가 비교적 간단하고 작은 규모의 프로젝트일 때
+**추가적인 라이브러리 설치 없이 빠르게 전역 상태를 관리하고 싶을 때
+성능 최적화가 크게 필요하지 않은 경우
+
+Redux 설치 
+npm install redux react-redux
+
+react-redux 패키지 : react애플리케이션에서 redux를 쉽게 사용할 수 있도록 돕는 바인딩 라이브러리이다
+바인딩 라이브러리 : 두개이상의 시스템이나 라이브러리간의 연결을 원할하게 해주는 역할을하는소프트 웨어이다.
+서로 다른기술이나API를 사용하는 시스템이 함께 동작하도록 돕는것이다 .
+ 	redux는 react없이도 사용할 수 있는 상태관리 JS라이브러리이다 .
+
+provider 컴포넌트
+	애플리케이션 전체에 스토어를 제공한다 .
+	최상위 컴포넌트를 감싸서 모든 자식 컴포넌트가 Redux 스토어에 접근할 수 있게 해준다 .
+
+userSeletor 
+	Redux 스토어에서 상태를 선택하고 React컴포넌트에서 사용할 수 있게 한다 .
+	useSelector 를 사용하면 스토어의 특정 상태를 선택해서 가져올 수 있다 .
+
+useDispatch 
+	액션을 디스패치하는 함수로 컴포넌트에서 액션을 발생시켜 상태를 변경할 수 있게한다 .
+
+
+리듀서의 기본구조 
+- reducer는 두가지 인자를 가지는 함수이다.
+ reducer변수명 = (state,action)
+- 현재 상태(state)
+리듀서가 관리하는 현재 상태.
+리듀서가 처음 호출될 때 초기 상태가 설정된다.
+
+- 액션(action)
+상태를 변경할 이벤트. 액션 객체는 최소한 type 속성을 가지며, 상태를 어떻게 변경할지 리듀서에게 알려준다.
+
+
+리듀서의 역할
+액션의 타입에 따라 상태를 변경하고, 새로운 상태 객체를 반환해. 중요한 점은 상태를 직접 변경하는 것이 아니라, 
+새로운 상태 객체를 반환함으로써 **불변성(immutability)**을 유지한다는 것이다.
+리듀서는 액션에 의해 트리거(호출)되며, 주어진 상태와 액션을 바탕으로 새로운 상태를 계산한다.
+
+상태 불변성 유지
+Redux에서는 상태를 직접 변경하는 대신, 불변성을 유지하면서 새로운 상태 객체를 반환하는 것이 중요하다.
+직접 상태를 변경하지 않고 새로운 객체를 반환함으로써, 과거 상태를 유지하고, 변경 사항을 추적할 수 있다.
+
+
+ 
+
+Reducer-react-app 파일의  redux예제 흐름
+
+증가혹은 감소 버튼을 누르면
+dispatch(액션함수) 가 실행이 되고 액션함수를 통해 반환받은 객체를 리듀서함수로 보낸다.
+
+increment() 의 반환값 {type : 'INCREMENT'}
+
+dispatch({type:'INCREMENT}) 를 counterReducer의 인자로 전달한다 .
+
+리듀서에서 상태를 업데이트하면 재렌더링이 되고 화면에 바뀐값이 출력이된다 
+
+
+redux에제에서는 
+
+increment 버튼과 decrement 버튼이 눌렸을때 h1태그에 count의 값을 1증가시키거나 1감소시키기는 기능을 구현한다.
+ 
+action.js 
+increment 함수,  decrement 함수 생성  store의 상태를 변경할이벤트 
+INCREMENT타입,DECREMENT타입 을 가지는 객체반환 
+reducer 에서 상태를 변경하기 위한 신호
+
+  
+reducer
+count 변수에대한 초기값을 정의한다
+
+액션의 타입에따라 상태를 변경하기위한 counterReducer 라는 reducer를 정의한다.
+counterReducer는 count의 값을 변화시키기위함이 아닌 count의 초기상태에서 변화되는값을 새로운 상태객체로 반환한다 
+
+
+
+store
+변화된 상태에 값을 저장한 객체를 반환하는 Reducer(리듀서) 를통해 
+다른 애플리케이션 전반에서 
+상태를 유지하고 관리한다 .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
