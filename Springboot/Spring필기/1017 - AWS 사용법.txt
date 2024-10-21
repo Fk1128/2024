@@ -1,0 +1,34 @@
+
+
+1. 배포를 하기위한 프로그램을 만든다 
+2. 프로그램을 빌드한다 .
+2-1. 스프링부터의 경우 gradlew가 있는 폴더로 경로를잡고 ./gradlew build를 한다 .
+2-2. 리액트의 경우 npm rum build를 한다 . (설정파일과 묶어서 압축한다 .)
+
+
+3. eb환경을 만든다 .
+3-1. 백엔드환경을 만든다.
+ㄴ 빌드된 .jar 파일을 업로드 및 배포 한다 .
+3-2. 프론트엔드 환경을 만든다 .
+ㄴ 빌드된 압축파일을 업로드 및 배포 한다 .
+
+4. 오류나면 로그를 확인한다 .(warn , erorr 체크 ) 
+5. 코드수정 후 각 환경으로 재배포 .
+
+
+
+엔드포인트
+awseb-e-x7kj5mrwej-stack-awsebrdsdatabase-flkma30d5kkd.cxqc006kavce.ap-northeast-2.rds.amazonaws.com
+
+application-prod.yml datasource url : awseb-e-x7kj5mrwej-stack-awsebrdsdatabase-flkma30d5kkd.cxqc006kavce.ap-northeast-2.rds.amazonaws.com:3306/ebdb
+
+
+
+
+
+
+
+
+
+
+
