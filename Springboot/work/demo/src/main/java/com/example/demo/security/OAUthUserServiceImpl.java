@@ -44,7 +44,7 @@ public class OAUthUserServiceImpl extends DefaultOAuth2UserService  {
 		if(userRepository.existsByUsername(username)) {
 			userEntity = UserEntity.builder()
 							.username(username)
-							.authProvider(authProvider)
+							.authProvider(authProvider) //" authProvider = "github"
 							.build();
 
 			// 내용을 넣은 userEntity객체를 db에 저장 .
