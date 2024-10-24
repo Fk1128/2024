@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Grid, Typography, TextField, Button } from "@mui/material";
-import { signin } from "./service/ApiService"
+import { signin, socialLogin } from "./service/ApiService"
 import { Link } from "react-router-dom";
 
 
@@ -18,6 +18,9 @@ function Login() {
         // ApiService의 signin 메서드를 사용해 로그인 요청을 서버에 보냄
         signin({ username: username, password: password });
     }
+    const handleSocialLogin = (provider) => { 
+            socialLogin(provider);
+      }
 
 
 
@@ -61,7 +64,7 @@ function Login() {
                             autoComplete="current-password" // 브라우저 자동완성 사용
                         />
                     </Grid>
-                    {/* 제출 버튼 */}
+                    {/* 로그인 버튼 */}
                     <Grid item xs={12}>
                         <Button
                             type="submit"
@@ -72,8 +75,20 @@ function Login() {
                             로그인
                         </Button>
                     </Grid>
+                    {/* 깃허브 로그인 필드 */}
+                    <Grid item xs={12}>
+                        <Button onClick = {() => handleSocialLogin("github")}
+                            fullWidth
+                            variant="contained" 
+                            style={{ backgroundColor: '#000' }}>
+                            깃허브 로그인하기
+                        </Button>
+                    </Grid>
+
+
+
                     <Grid item>
-                        <Link to="/signup" variant ="body2">
+                        <Link to="/signup" variant="body2">
                             계정이 없습니까 ? 여기서 가입하세요
                         </Link>
                     </Grid>

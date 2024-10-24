@@ -92,3 +92,9 @@ export function signup(userDTO) {
     return call("/auth/signup","POST",userDTO)
     
 }
+
+// 소셜로그인 추가 
+
+export function socialLogin(provider) {
+    window.location.href= API_BASE_URL + "/auth/authorize/"+provider+"?redirect_url="+window.location.origin ; 
+  } //origin : http(프로토콜)://localhost(도메인):5000(포트번호) 를 포함한것을 뜻함 .
