@@ -1,0 +1,44 @@
+메서드 오버로딩
+메서드의 매개변수만 다르면 된다 .
+1. 매개변수의 개수가 다름
+2. 매개변수의 타입이 다름
+3. 매개변수의 개수와 타입이 같아도 순서가 다름 .
+
+CORS(Cross-Origin Resource Sharing)
+한 origin에서 실행중인 웹 어플리케이션이 다른 출처의 리소스에 접근할 수 있도록 허용하는 매커니즘
+
+CORS 는 클라이언트 측 보안정책이다 .
+주로 브라우저가 JS를 통해 외부 서버에 API를 요청할 때 적용
+
+하지만, 서버에서 다른 서버로의 API요청은 CORS 정책의적용을 받지않는다 .
+즉 , 서버 대 서버 통신에서는 CORS 가 브라우저처럼 중재하지 않기때문에 제한없이 자유롭게 통신할 수 있다 .
+
+WebClient
+Spring5에서 도입된 비동기 HTTP 클라이언트로 , RESTful 웹서비스와 통신을 비동기적으로 처리할 수 있는 강력한 도구이다 .
+
+HTTP 요청 메서드를 지원
+GET,POST,PUT,DELETE를 다 지원한다 .
+
+WebClient의 반환타입으로 Mono타입 , Flux타입이 있다 .
+
+Mono : 0 또는 1개의 데이터를 반환
+Flux : 0개 이상의 데이터를 반환 
+
+
+
+
+rss/channel/item/title	String	뉴스 기사의 제목. 제목에서 검색어와 일치하는 부분은 <b> 태그로 감싸져 있습니다.
+rss/channel/item/originallink	String	뉴스 기사 원문의 URL
+rss/channel/item/link	String	뉴스 기사의 네이버 뉴스 URL. 네이버에 제공되지 않은 기사라면 기사 원문의 URL을 반환합니다.
+rss/channel/item/description	String	뉴스 기사의 내용을 요약한 패시지 정보. 패시지 정보에서 검색어와 일치하는 부분은 <b> 태그로 감싸져 있습니다.
+rss/channel/item/pubDate	dateTime	뉴스 기사가 네이버에 제공된 시간. 네이버에 제공되지 않은 기사라면 기사 원문이 제공된 시간을 반환합니다.
+
+
+
+
+
+
+
+
+
+
