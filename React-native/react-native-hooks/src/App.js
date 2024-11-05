@@ -5,6 +5,7 @@ import Counter from "./component/Counter";
 import Form from "./component/Form";
 import Timer from "./component/Timer";
 import Length from "./component/Length";
+import Dog from "./component/Dog";
 const Container = styled.View`
     flex : 1;
     background-color: #fff;
@@ -21,7 +22,8 @@ const App = () => {
         {/* <Button title={isVisible ? 'Hide' : 'Show'} onPress={() => setIsVisible(!isVisible) } />
         {isVisible && <Form />} */}
         {/* <Timer/> */}
-        <Length/>
+        {/* <Length/> */}
+        <Dog/>
         </Container>
     )
 }
