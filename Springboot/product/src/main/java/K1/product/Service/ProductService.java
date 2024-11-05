@@ -17,27 +17,33 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+
+	public void validate(ProductDTO dto) {
+	ProductEntity entity = ProductDTO.toEntity(dto) ;
+	if(entity == null){
+	throw new ReuntimeException ("Entity can not be null" )
+	}
+	}
 	
 	// 조회하기 
 	public List<ProductDTO> findAll() {
 		//db에 접근해서 조회
 		List<ProductEntity> entities =productRepository.findAll();
 		
-		return entities.stream().map(ProductDTO ::new).collect(Collectors.toList()) ;
-			
+		return entities.stream().map(ProductDTO ::new).collect(Collectors.toList()) ;		
 	}
 	
 	//추가하기 
 	public List<ProductDTO> create(ProductDTO dto) {
 		
 	ProductEntity entity =	ProductDTO.toEntity(dto) ;
+		validate(entity) ;
 	productRepository.save(entity) ;
 	return findAll() ;
-	
-		
-		
-		
 	}
+
+	
 	
 	
 	
