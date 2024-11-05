@@ -7,5 +7,5 @@ import K1.product.Model.ProductEntity;
 
 @Repository
 public interface ProductRepository  extends JpaRepository<ProductEntity, Integer>{
-
+	
 }
