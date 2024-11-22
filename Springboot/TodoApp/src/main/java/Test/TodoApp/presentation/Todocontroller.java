@@ -53,11 +53,14 @@ public class Todocontroller {
 	
 	// 삭제
 	@DeleteMapping
-	public ResponseEntity<?> delete( @AuthenticationPrincipal String userId,@RequestBody TodoDTO dto){
+	public ResponseEntity<?> delete(@AuthenticationPrincipal String userId,@RequestBody TodoDTO dto){
 		List<TodoDTO> dtos = service.delete(userId,dto);
 		ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
 		return ResponseEntity.ok().body(response);
 	}
 	
 
+	
+	
+	
 }

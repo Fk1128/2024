@@ -18,7 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class TokenProvider {
-
+	
+	
+	
+	// SECRET_KEY_STRING 에 저장된 문자열은 서명부분에 들어갈 내용을 Base64로 인코딩해놓은 문자열이 일반적으로 사용된다
+	// 비밀키는 보통 랜덤 바이트배열로 생선된다 .
+	// Base64는 URL-safe 형식(Base64 URL 인코딩)으로 변환할 수 있어, 다양한 시스템 간에 키를 안전하게 전달할 수 있습니다.
+	// Base64는 데이터를 암호화하지 않으므로 보안적 이점은 없지만, 키를 사람이 읽을 수 없는 형태로 표현하여 실수로 노출되는 것을 어느 정도 방지할 수 있습니다.
+	
 	private static final String SECRET_KEY_STRING = "YXNkanNhbGtkamFzbGpkYXNrbmRzYWprbmNhc3p4b2NqYXNjbmtseHpuY2tsc2FzZGphc2tsamRrbGF3aG5kcXdpZG5hc2RuYXNrbGRucXdrbGRuYXNrbGNuem1hc2RqaWFzb2RuYQ==";
 	private static final byte[] SECRET_KEY = Base64.getDecoder().decode(SECRET_KEY_STRING);
 	private static final Key key = Keys.hmacShaKeyFor(SECRET_KEY);

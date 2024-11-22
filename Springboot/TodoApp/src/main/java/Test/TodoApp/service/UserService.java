@@ -1,6 +1,10 @@
 package Test.TodoApp.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,13 @@ public class UserService {
 	private UserRepository repository;
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+	// 유저조회
+	public List<UserDTO> getAll() {
+		List<UserEntity> entities = repository.findAll();
+		List<UserDTO> dtos = entities.stream().map(UserDTO::new).collect(Collectors.toList());
+		return dtos;
+	}
 
 	// 유저생성
 	public UserEntity create(UserDTO dto) {
@@ -37,14 +48,31 @@ public class UserService {
 	}
 
 	// userName,password가 같은 user 엔티티 조회
-	public UserEntity getByCredentials(String userName, String password) {
-		UserEntity originalUser = repository.findByUserId(userName);
+	public UserEntity getByCredentials(String userId, String password) {
+		UserEntity entity = repository.findByUserId(userId);
 		// DB에 저장된 암호화된 비밀번호와 사용자에게 입력받아 전달된 암호화된 비밀번호를 비교
-		if (originalUser != null && passwordEncoder.matches(password, originalUser.getPassword())) {
-			return originalUser;
+		if (entity != null && passwordEncoder.matches(password, entity.getPassword())) {
+			return entity;
 		}
 
-		return repository.findByUserIdAndPassword(userName, password);
+		return repository.findByUserIdAndPassword(userId, password);
 	}
+
+	// 회원정보 수정 
+
+	public String modify(String userId, UserDTO dto) {
+		UserEntity originUser = repository.findByUserId(userId);
+		originUser.setPassword(passwordEncoder.encode(dto.getPassword()));
+		repository.save(originUser) ;
+		return "비밀번호 수정완료" ;
+
+	}
+	
+	public 	String  delete(String userId , String password){
+		repository.delete(getByCredentials(userId,password));
+		return "계정 삭제완료 " ;
+	}
+	
+
 
 }

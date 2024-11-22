@@ -16,3 +16,4 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
 	// 'findBy' 접두사는 조회쿼리를 생성해라 라는 의미이다 .
 
 }
+                    

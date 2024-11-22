@@ -1,8 +1,14 @@
 package Test.TodoApp.presentation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +29,15 @@ public class UserController {
 	private UserService service;
 
 	@Autowired
-	private   TokenProvider tokenProvider;
+	private TokenProvider tokenProvider;
+
+	// 조회
+	@GetMapping
+	public ResponseEntity<?> retrieve() {
+		List<UserDTO> dtos = service.getAll();
+		ResponseDTO<UserDTO> response = ResponseDTO.<UserDTO>builder().data(dtos).build();
+		return ResponseEntity.ok().body(response);
+	}
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@RequestBody UserDTO dto) {
@@ -48,8 +62,8 @@ public class UserController {
 			final String token = tokenProvider.create(user);
 			// 토큰생성
 
-			//토큰 검증
-			tokenProvider.validateAndGetUserId(token) ;
+			// 토큰 검증
+			tokenProvider.validateAndGetUserId(token);
 			final UserDTO responseUserDTO = UserDTO.builder().id(user.getId()).userId(user.getUserId()).token(token)
 					.build();
 			return ResponseEntity.ok().body(responseUserDTO);
@@ -66,4 +80,20 @@ public class UserController {
 
 	}
 
+	@PutMapping
+	public ResponseEntity<?> modify(@AuthenticationPrincipal String userId ,@RequestBody UserDTO dto){
+		String message = service.modify(userId, dto) ;
+		return ResponseEntity.ok().body(message) ;
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<?> delete(@AuthenticationPrincipal String userId ,@RequestBody UserDTO dto){
+		String message = service.delete(userId, dto.getPassword()) ;
+		return ResponseEntity.ok().body(message) ;
+		
+	}
+	
+	
+	
+	
 }
